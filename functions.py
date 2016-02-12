@@ -100,11 +100,26 @@ def comments(database):
     # Comment bodies and individual word frequency
     dict = defaultdict(int)
 
+    # related words
+    newton_w = 0
+    peyton_w = 0
+    broncos_w = 0
+    panther_w = 0
     for row in c.execute ('SELECT comment FROM ' + database):
         comment = row[0].lower()
         # Do stuff here
         
         comment = comment.split()
+        
+        if "cam" in comment or "newton" in comment:
+            newton_w += 1
+        if "peyton" in comment or "manning" in comment:
+            peyton_w += 1
+        if "broncos" in comment or "denver" in comment:
+            broncos_w += 1
+        if "carolina" in comment or "panthers" in comment:
+            panther_w += 1
+
         for word in comment:
             word = word.lower()
             dict[word] += 1
@@ -116,7 +131,15 @@ def comments(database):
     for item in sorted_dict:
         ws.cell(row=rown, column=5).value = item[0]
         ws.cell(row=rown, column=6).value = item[1]
-        rown += 1
+	rown += 1
+
+    # Print stats
+    word_arr = [newton_w, peyton_w, broncos_w, panther_w]
+    
+    title_arr = ["Cam Newton", "Peyton Manning", "the Broncos", "the Panthers"]
+    
+    for i in range(0, len(word_arr)):
+        print("There were " + str(word_arr[i]) + " comments about " + title_arr[i] )
 
     # Resave Workbook
     wb.save(database + '.xlsx')

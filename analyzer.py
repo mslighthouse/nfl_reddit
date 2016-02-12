@@ -1,4 +1,4 @@
-from analyzer_functions import *
+from functions import *
 
 # UNCOMMENT DEPENDING ON DATABASE YOU'D LIKE TO SEE
 #database = 'first_quarter'
@@ -10,9 +10,9 @@ database = 'superbowl'
 
 # You can comment or uncomment based on what data you'd like in your Excel file
 setup_workbook(database)
-gilded(database)
 unique_users(database)
 flairs(database)
+gilded(database)
 comments(database)
 comments_per_minute(database)
 print("Done!")
